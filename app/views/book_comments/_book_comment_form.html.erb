@@ -1,0 +1,10 @@
+ <% @books.each do |book| %>
+    <div class="one-book">
+      <%= link_to book_path(book) do %>
+      <p class="caption">ユーザ名</p>
+      <%= image_tag book.user.get_profile_image(100, 100) %><br>
+      <p class="caption mb-0"><%= book.location %></p>
+      <p class="caption"><%= "#{book.book_comments.count} コメント" %></p>  
+      <% end %>
+    </div>
+  <% end %>
