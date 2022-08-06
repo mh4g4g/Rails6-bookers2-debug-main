@@ -1,24 +1,21 @@
- <div class="book_comments ml-5 mt-5">
-        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
-        <%= f.text_area :book_comment, :size=>"60x3",placeholder: "コメントする" %>
-        <%= f.submit "送信する", class: "btn btn-success mb-4" %>
-        <% end %>
-
-        <p>コメント件数：<%= @book_comments.count %></p>
-          <% @book_comments.each do |book_comment| %>
-	  <div class="book_comments-index mb-2">
-          <%= book_comment.user.name %>
-          <%= book_comment.created_at.strftime('%Y/%m/%d') %><br>
-          <div class="d-flex">
-            <%= book_comment.book_comment %>
-            <% if book_comment.user == current_user %>
-            <div class="book_comment-delete">
-              <%= link_to "削除", post_book_comment_path(book_comment.post, book_comment), method: :delete, class: "btn-sm btn-danger" %>
-            </div>
-          </div>
-        </div>
-        <% end %>
-        <% end %>
-        <%= paginate @book_comments %>
-      </div>
-    </div>
+<table>
+  <tbody>
+      <% book.book_comments.each do |book_comment| %>
+      <tr>
+        
+        <td>
+          <%= link_to user_path(book_comment.user) do %>
+            <%= image_tag book_comment.user.get_profile_image, size: "100x100" %><br>
+            <%= book_comment.user.name %>
+          <% end %>
+        </td>
+        <td><%= book_comment.comment %></td>
+        <td>
+          <% if book_comment.user == current_user %>
+            <%= link_to "Destroy", book_book_comment_path(book, book_comment), method: :delete, class: "btn btn-danger pull-right" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
